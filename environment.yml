@@ -1,0 +1,20 @@
+name: mmclassification
+channels:
+  - defaults
+  - conda-forge
+  - pytorch
+dependencies:
+  - python=3.8
+  - pip
+  - pip:
+      - --extra-index-url https://download.pytorch.org/whl/cu113
+      - torch
+      - torchvision
+      - torchaudio
+      - tensorboard
+ - mim:
+     -  mmcv-full
+#      - -U openmim
+#      - mmcv-full
+#      - v -e .
+#      - -r requirements.txt

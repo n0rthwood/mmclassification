@@ -1,14 +1,16 @@
-_base_ = [
-    '../_base_/models/repvgg-A0_in1k.py',
-    '../_base_/datasets/imagenet_bs64_pil_resize.py',
-    '../_base_/schedules/imagenet_bs256_coslr.py',
-    '../_base_/default_runtime.py'
-]
+_base_ = '../repvgg/repvgg-A0_4xb64-coslr-120e_in1k.py'
+
+model = dict(backbone=dict(arch='B1'), head=dict(in_channels=2048))
+
 
 train_path='/opt/images/fresh_chestnut/train_set/DatasetId_1692766_1666577221/'
-train_max_epochs=300
-#load_from =  "work_dir/run2/latest.pth"
+train_max_epochs=1000
 
+test_path='/opt/images/test_set_chestnut/DatasetId_1672161_1666239435/'
+
+
+#load_from =  "/opt/workspace/mmclassification/work_dir/repvgg_b1_run1/best_accuracy_top-1_epoch_380.pth"
+resume_from = "/opt/workspace/mmclassification/work_dir/repvgg_b1_run1/latest.pth"
 log_config = dict(
     interval=100,
     hooks=[
@@ -96,8 +98,8 @@ data = dict(
     test=dict(
         type=dataset_type,
         classes=classes,
-        data_prefix=train_path_images,
-        ann_file=train_path_annotation,
+        data_prefix=f"{test_path}/Images/",
+        ann_file=f"{test_path}/Annotations/coco_info.json",
         pipeline=test_pipeline
     )
 )

@@ -1,12 +1,10 @@
 _base_ = [
-    '../_base_/models/repvgg-A0_in1k.py',
-    '../_base_/datasets/imagenet_bs64_pil_resize.py',
-    '../_base_/schedules/imagenet_bs256_coslr.py',
-    '../_base_/default_runtime.py'
+    '../_base_/models/resnet18_cifar.py', '../_base_/datasets/cifar10_bs16.py',
+    '../_base_/schedules/cifar10_bs128.py', '../_base_/default_runtime.py'
 ]
 
 train_path='/opt/images/fresh_chestnut/train_set/DatasetId_1692766_1666577221/'
-train_max_epochs=300
+train_max_epochs=500
 #load_from =  "work_dir/run2/latest.pth"
 
 log_config = dict(
