@@ -3,8 +3,10 @@ _base_ = [
     '../_base_/schedules/cifar10_bs128.py', '../_base_/default_runtime.py'
 ]
 
-train_path='/opt/images/fresh_chestnut/train_set/DatasetId_1692766_1666577221/'
-train_max_epochs=500
+train_max_epochs=1000
+train_path='/opt/imagedb/train'
+test_path='/opt/imagedb/test'
+
 #load_from =  "work_dir/run2/latest.pth"
 
 log_config = dict(

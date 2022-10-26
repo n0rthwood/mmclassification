@@ -5,7 +5,8 @@ _base_ = [
     '../_base_/default_runtime.py'
 ]
 
-train_path='/opt/images/fresh_chestnut/train_set/DatasetId_1692766_1666577221/'
+train_path='/opt/imagedb/train'
+test_path='/opt/imagedb/test'
 train_max_epochs=300
 #load_from =  "work_dir/run2/latest.pth"
 
@@ -49,7 +50,7 @@ model = dict(
 runner = dict(type='EpochBasedRunner', max_epochs=train_max_epochs)
 # dataset settings
 dataset_type = 'BaiduCocoJsonList'
-classes = train_classes
+#classes = train_classes
 
 img_norm_cfg = dict(
     mean=[127.5, 127.5, 127.5], std=[127.5, 127.5, 127.5], to_rgb=True)
@@ -79,23 +80,22 @@ test_pipeline = [
 ]
 
 data = dict(
+    
+    samples_per_gpu=128,
     train=dict(
         type=dataset_type,
-        classes=classes,
         data_prefix=train_path_images,
         ann_file=train_path_annotation,
         pipeline=train_pipeline
     ),
     val=dict(
         type=dataset_type,
-        classes=classes,
         data_prefix=train_path_images,
         ann_file=train_path_annotation,
         pipeline=test_pipeline
     ),
     test=dict(
         type=dataset_type,
-        classes=classes,
         data_prefix=train_path_images,
         ann_file=train_path_annotation,
         pipeline=test_pipeline

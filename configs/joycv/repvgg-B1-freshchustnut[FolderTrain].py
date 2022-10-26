@@ -4,10 +4,9 @@ model = dict(backbone=dict(arch='B1'), head=dict(in_channels=2048))
 
 
 dataset_type = 'CustomDataset'
-train_path='/opt/images/fresh_chestnut/train_set/DatasetId_1692766_1666577221/'
 train_max_epochs=1000
-
-test_path='/opt/images/test_set_chestnut/DatasetId_1672161_1666239435/'
+train_path='/opt/imagedb/train'
+test_path='/opt/images/test'
 
 
 #load_from =  "/opt/workspace/mmclassification/work_dir/repvgg_b1_run1/best_accuracy_top-1_epoch_380.pth"
