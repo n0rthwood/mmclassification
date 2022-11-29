@@ -88,12 +88,20 @@ def parse_args():
 
 
 def main():
+    from clearml import Task
     args = parse_args()
 
     cfg = Config.fromfile(args.config)
     if args.cfg_options is not None:
         cfg.merge_from_dict(args.cfg_options)
 
+    filename=os.path.basename(args.config)
+    import platform
+    from datetime import datetime as dt
+    now = dt.now()
+    timestr=now.strftime("%Y%m%d_%H:%M:%S")
+    task = Task.init(project_name='MMCLS', task_name=f"{filename}-{platform.node()}-{timestr}")
+    
     # set multi-process settings
     setup_multi_processes(cfg)
 
@@ -174,7 +182,10 @@ def main():
 
     model = build_classifier(cfg.model)
     model.init_weights()
-
+    
+    Task.current_task().upload_artifact(name='args', artifact_object=args)
+    Task.current_task().upload_artifact(name='cfg', artifact_object=cfg)
+   
     datasets = [build_dataset(cfg.data.train)]
     if len(cfg.workflow) == 2:
         val_dataset = copy.deepcopy(cfg.data.val)
