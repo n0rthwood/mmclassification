@@ -61,7 +61,6 @@ train_pipeline = [
     dict(type='LoadImageFromFile'),
     dict(type='Resize', size=(499,1220)),
     dict(type='CenterCrop', crop_size=(499,1220)),
-    dict(type='Contrast', magnitude_key='magnitude', magnitude_range=(0, 0.9)),
     dict(type='RandomFlip', flip_prob=0.5, direction='vertical'),
     dict(type='RandomFlip', flip_prob=0.5, direction='horizontal'),
     dict(type='Normalize', **img_norm_cfg),

@@ -59,8 +59,8 @@ img_test_norm_cfg = dict(
     mean=[127.5, 127.5, 127.5], std=[127.5, 127.5, 127.5], to_rgb=True)
 train_pipeline = [
     dict(type='LoadImageFromFile'),
-    dict(type='Resize', size=(499,1220)),
-    dict(type='CenterCrop', crop_size=(499,1220)),
+    dict(type='Resize', size=(249,610)),
+    dict(type='CenterCrop', crop_size=(249,610)),
     
     dict(type='RandomFlip', flip_prob=0.5, direction='vertical'),
     dict(type='RandomFlip', flip_prob=0.5, direction='horizontal'),
@@ -72,8 +72,8 @@ train_pipeline = [
 ]
 test_pipeline = [
     dict(type='LoadImageFromFile'),
-    dict(type='Resize', size=(499,1220)),
-    dict(type='CenterCrop', crop_size=(499,1220)),
+    dict(type='Resize', size=(249,610)),
+    dict(type='CenterCrop', crop_size=(249,610)),
     dict(type='Normalize', **img_norm_cfg),
     dict(type='RandomGrayscale', gray_prob=1),
     dict(type='ImageToTensor', keys=['img']),
