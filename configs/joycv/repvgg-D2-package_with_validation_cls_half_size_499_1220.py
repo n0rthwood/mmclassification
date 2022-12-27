@@ -1,12 +1,10 @@
-_base_ = [
-    '../_base_/models/repvgg-A0_in1k.py',
-    '../_base_/datasets/imagenet_bs64_pil_resize.py',
-    '../_base_/schedules/imagenet_bs256_coslr.py',
-    '../_base_/default_runtime.py'
-]
+_base_ = '../repvgg/repvgg-B3_4xb64-autoaug-lbs-mixup-coslr-200e_in1k.py'
+
+model = dict(backbone=dict(arch='D2se'))
+
 
 train_path='/opt/workspace/imagedb/package_cls_data/DatasetId_1725538_1669651240'
-test_path='/opt/workspace/imagedb/package_cls_data/DatasetId_1729055_1669989407_validate'
+test_path='/opt/workspace/imagedb/package_cls_data/DatasetId_1728167_1669915943_3_cat_validation'
 train_max_epochs=300
 #load_from =  "/opt/workspace/mmclassification/work_dirs/repvgg-A0-package_cls_half_size_499_1220/best_accuracy_top-1_epoch_43.pth"
 #resume_from = "/opt/workspace/mmclassification/work_dirs/repvgg-A0-package_cls_half_size_499_1220/best_accuracy_top-1_epoch_43.pth"
@@ -42,6 +40,9 @@ def extract_category_info(annotation_path):
 
 train_classes=extract_category_info(train_path_annotation)
 
+val_classes=extract_category_info(test_path_annotation)
+
+
 checkpoint_config = dict(interval=50)
 evaluation = dict(interval=1, start=1, metric='accuracy', metric_options={'topk': (1, )}, save_best='accuracy_top-1')
 
@@ -49,7 +50,15 @@ evaluation = dict(interval=1, start=1, metric='accuracy', metric_options={'topk'
 model = dict(
     head=dict(
         num_classes=len(train_classes),
-    ))
+        loss=dict(
+            num_classes=len(train_classes)),
+        
+            ),
+    train_cfg=dict(
+            augments=dict(
+                type='BatchMixup', alpha=0.2, num_classes=len(train_classes), prob=1.0)
+    )
+)
 
 #schedules override
 runner = dict(type='EpochBasedRunner', max_epochs=train_max_epochs)
@@ -84,21 +93,24 @@ test_pipeline = [
 
 data = dict(
     
-    samples_per_gpu=32,
+    samples_per_gpu=2,
     train=dict(
         type=dataset_type,
+
         data_prefix=train_path_images,
         ann_file=train_path_annotation,
         pipeline=train_pipeline
     ),
     val=dict(
         type=dataset_type,
+
         data_prefix=test_path_images,
         ann_file=test_path_annotation,
         pipeline=test_pipeline
     ),
     test=dict(
         type=dataset_type,
+
         data_prefix=test_path_images,
         ann_file=test_path_annotation,
         pipeline=test_pipeline

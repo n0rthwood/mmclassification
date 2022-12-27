@@ -1,18 +1,16 @@
 _base_ = [
-    '../_base_/models/repvgg-A0_in1k.py',
-    '../_base_/datasets/imagenet_bs64_pil_resize.py',
-    '../_base_/schedules/imagenet_bs256_coslr.py',
-    '../_base_/default_runtime.py'
+    '../_base_/models/resnet18_cifar.py', '../_base_/datasets/cifar10_bs16.py',
+    '../_base_/schedules/cifar10_bs128.py', '../_base_/default_runtime.py'
 ]
 
 train_path='/opt/workspace/imagedb/package_cls_data/DatasetId_1725538_1669651240'
-test_path='/opt/workspace/imagedb/package_cls_data/DatasetId_1729055_1669989407_validate'
-train_max_epochs=300
+test_path='/opt/workspace/imagedb/package_cls_data/DatasetId_1728167_1669914699_validate'
+train_max_epochs=1300
 #load_from =  "/opt/workspace/mmclassification/work_dirs/repvgg-A0-package_cls_half_size_499_1220/best_accuracy_top-1_epoch_43.pth"
 #resume_from = "/opt/workspace/mmclassification/work_dirs/repvgg-A0-package_cls_half_size_499_1220/best_accuracy_top-1_epoch_43.pth"
 
 log_config = dict(
-    interval=100,
+    interval=10,
     hooks=[
         dict(type='TextLoggerHook'),
         dict(type='TensorboardLoggerHook')
@@ -84,7 +82,7 @@ test_pipeline = [
 
 data = dict(
     
-    samples_per_gpu=32,
+    samples_per_gpu=2,
     train=dict(
         type=dataset_type,
         data_prefix=train_path_images,

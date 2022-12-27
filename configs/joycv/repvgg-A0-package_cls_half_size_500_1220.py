@@ -5,8 +5,8 @@ _base_ = [
     '../_base_/default_runtime.py'
 ]
 
-train_path='/opt/workspace/imagedb/package_cls_data/DatasetId_1725538_1669651240'
-test_path='/opt/workspace/imagedb/package_cls_data/DatasetId_1729055_1669989407_validate'
+train_path='/opt/workspace/imagedb/package_cls_data/DatasetId_1733982_1670733482'
+test_path='/opt/workspace/imagedb/package_cls_data/DatasetId_1733993_1670733467'
 train_max_epochs=300
 #load_from =  "/opt/workspace/mmclassification/work_dirs/repvgg-A0-package_cls_half_size_499_1220/best_accuracy_top-1_epoch_43.pth"
 #resume_from = "/opt/workspace/mmclassification/work_dirs/repvgg-A0-package_cls_half_size_499_1220/best_accuracy_top-1_epoch_43.pth"
@@ -64,8 +64,8 @@ img_test_norm_cfg = dict(
     mean=[127.5, 127.5, 127.5], std=[127.5, 127.5, 127.5], to_rgb=True)
 train_pipeline = [
     dict(type='LoadImageFromFile'),
-    dict(type='Resize', size=(499,1220)),
-    dict(type='CenterCrop', crop_size=(499,1220)),
+    dict(type='Resize', size=(500,1220)),
+    dict(type='CenterCrop', crop_size=(500,1220)),
     dict(type='RandomFlip', flip_prob=0.5, direction='vertical'),
     dict(type='RandomFlip', flip_prob=0.5, direction='horizontal'),
     dict(type='Normalize', **img_norm_cfg),
@@ -75,8 +75,8 @@ train_pipeline = [
 ]
 test_pipeline = [
     dict(type='LoadImageFromFile'),
-    dict(type='Resize', size=(499,1220)),
-    dict(type='CenterCrop', crop_size=(499,1220)),
+    dict(type='Resize', size=(500,1220)),
+    dict(type='CenterCrop', crop_size=(500,1220)),
     dict(type='Normalize', **img_norm_cfg),
     dict(type='ImageToTensor', keys=['img']),
     dict(type='Collect', keys=['img'])

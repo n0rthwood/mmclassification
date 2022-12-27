@@ -52,6 +52,10 @@ def build_dataset(cfg, default_args=None):
         cp_cfg.pop('type')
         dataset = KFoldDataset(**cp_cfg)
     else:
+        print("=========================================")
+        print(DATASETS)
+        print(cfg['type'])
+        print("=========================================")
         dataset = build_from_cfg(cfg, DATASETS, default_args)
 
     return dataset

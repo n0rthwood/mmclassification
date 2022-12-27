@@ -1,12 +1,10 @@
-_base_ = [
-    '../_base_/models/repvgg-A0_in1k.py',
-    '../_base_/datasets/imagenet_bs64_pil_resize.py',
-    '../_base_/schedules/imagenet_bs256_coslr.py',
-    '../_base_/default_runtime.py'
-]
+_base_ = '../repvgg/repvgg-A0_4xb64-coslr-120e_in1k.py'
+
+model = dict(backbone=dict(arch='B1'), head=dict(in_channels=2048))
+
 
 train_path='/opt/workspace/imagedb/package_cls_data/DatasetId_1725538_1669651240'
-test_path='/opt/workspace/imagedb/package_cls_data/DatasetId_1729055_1669989407_validate'
+test_path='/opt/workspace/imagedb/package_cls_data/DatasetId_1728167_1669914699_validate'
 train_max_epochs=300
 #load_from =  "/opt/workspace/mmclassification/work_dirs/repvgg-A0-package_cls_half_size_499_1220/best_accuracy_top-1_epoch_43.pth"
 #resume_from = "/opt/workspace/mmclassification/work_dirs/repvgg-A0-package_cls_half_size_499_1220/best_accuracy_top-1_epoch_43.pth"

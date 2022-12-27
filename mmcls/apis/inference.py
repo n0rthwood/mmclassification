@@ -74,7 +74,15 @@ def inference_model(model, img):
             cfg.data.test.pipeline.pop(0)
         data = dict(img=img)
     test_pipeline = Compose(cfg.data.test.pipeline)
+    #print(cfg.data.test.pipeline)
+
+    #print(data['img'].shape)
+    #print(data['img'][0][0])
     data = test_pipeline(data)
+    #print(data['img'][0][0][0])
+    #print(data['img'][1][0][0])
+    #+print(data['img'][2][0][0])
+    
     data = collate([data], samples_per_gpu=1)
     if next(model.parameters()).is_cuda:
         # scatter to specified GPU
@@ -83,6 +91,7 @@ def inference_model(model, img):
     # forward the model
     with torch.no_grad():
         scores = model(return_loss=False, **data)
+        #print(scores)
         pred_score = np.max(scores, axis=1)[0]
         pred_label = np.argmax(scores, axis=1)[0]
         result = {'pred_label': pred_label, 'pred_score': float(pred_score)}
